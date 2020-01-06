@@ -1,6 +1,8 @@
-const init_bmb = (dialogEl) => {
+(() => {
+const init_bmb = (params) => {
+    const {host, dialogEl } = params;
     const ts = new Date().getTime();
-    fetch(`https://www.bullmarketbrokers.com/Information/StockPrice/GetStockPrices?_ts=${ts}&term=3&index=usd+soberanos&sortColumn=ticker&isAscending=true`,
+    fetch(`https://${host}/Information/StockPrice/GetStockPrices?_ts=${ts}&term=3&index=usd+soberanos&sortColumn=ticker&isAscending=true`,
 {"credentials":"include",
 "headers":{
     "accept":"*/*",
@@ -106,8 +108,11 @@ function dragElement(elmnt) {
 }
 
 switch(document.location.host) {
+    case "bullmarketbrokers.com":
     case "www.bullmarketbrokers.com": {        
         const dialogEl = createDialog();
-        init_bmb(dialogEl);
+        init_bmb({ dialogEl, host: document.location.host});
     }
 }
+
+})();
